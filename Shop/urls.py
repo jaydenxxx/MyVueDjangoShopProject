@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path, include
 from rest_framework.routers import DefaultRouter
+from rest_framework.documentation import include_docs_urls
 from django.views.static import serve
 
 from Shop.settings import MEDIA_ROOT
@@ -35,4 +36,5 @@ urlpatterns = [
     path('ueditor/', include('DjangoUeditor.urls')),
     # router的path路径
     re_path('^', include(router.urls)),
+    path('docs/', include_docs_urls(title='API接口文档'))
 ]

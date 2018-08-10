@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # 'xadmin',
+    'rest_framework',
     'DjangoUeditor',
     'goods',
     'users',
