@@ -43,12 +43,17 @@ INSTALLED_APPS = [
 
     # 'xadmin',
     'rest_framework',
+    'django_filters',
     'DjangoUeditor',
     'goods',
     'users',
     'trade',
     'user_operation',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
