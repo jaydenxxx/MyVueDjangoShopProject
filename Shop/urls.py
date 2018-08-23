@@ -24,7 +24,7 @@ from django.views.static import serve
 
 from Shop.settings import MEDIA_ROOT
 from goods.views import GoodsListViewSet, CatetoryViewSet
-from users.views import SmsCodeViewSet
+from users.views import SmsCodeViewSet, UserViewSet
 
 router = DefaultRouter()
 
@@ -33,6 +33,8 @@ router.register(r'goods', GoodsListViewSet, base_name="goods")
 router.register(r'categories', CatetoryViewSet, base_name="categories")
 
 router.register(r'codes', SmsCodeViewSet, base_name="codes")
+
+router.register(r'users', UserViewSet, base_name="users")
 
 urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),

@@ -9,7 +9,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 
-from .serializers import SmsSerilizer
+from .serializers import SmsSerilizer, UserRegSerializer
 from utils.yunpian import YunPian
 from Shop.settings import APIKEY
 from .models import VerifyCode
@@ -36,6 +36,7 @@ class CustomBackend(ModelBackend):
                 return user
         except Exception as e:
             return None
+
 
 class SmsCodeViewSet(CreateModelMixin, viewsets.GenericViewSet):
     """
@@ -78,3 +79,10 @@ class SmsCodeViewSet(CreateModelMixin, viewsets.GenericViewSet):
                 "mobile":mobile
             }, status=status.HTTP_201_CREATED)
 
+
+class UserViewSet(CreateModelMixin, viewsets.GenericViewSet):
+    """
+    用户
+    """
+    serializer_class = UserRegSerializer
+    queryset = User.objects.all()
