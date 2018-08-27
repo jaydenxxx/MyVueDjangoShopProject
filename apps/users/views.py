@@ -76,7 +76,7 @@ class SmsCodeViewSet(CreateModelMixin, viewsets.GenericViewSet):
             code_record = VerifyCode(code=code, mobile=mobile)
             self.perform_create(code_record)
             return Response({
-                "mobile":mobile
+                "mobile": mobile
             }, status=status.HTTP_201_CREATED)
 
 

@@ -3,6 +3,7 @@ from django.db import models
 
 from DjangoUeditor.models import UEditorField
 
+
 class GoodsCategory(models.Model):
     """
     商品多级分类
@@ -31,6 +32,7 @@ class GoodsCategory(models.Model):
     def __str__(self):
         return self.name
 
+
 class GoodsCategoryBrand(models.Model):
     """
     某一大类下的宣传商标
@@ -48,6 +50,7 @@ class GoodsCategoryBrand(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Goods(models.Model):
     """
@@ -81,6 +84,7 @@ class Goods(models.Model):
     def __str__(self):
         return self.name
 
+
 class GoodsImage(models.Model):
     """
     商品轮播图
@@ -95,6 +99,7 @@ class GoodsImage(models.Model):
 
     def __str__(self):
         return self.goods.name
+
 
 class Banner(models.Model):
     """
@@ -112,6 +117,7 @@ class Banner(models.Model):
     def __str__(self):
         return self.goods.name
 
+
 class IndexAd(models.Model):
     """
     首页类别标签右边展示的七个商品广告
@@ -125,6 +131,7 @@ class IndexAd(models.Model):
 
     def __str__(self):
         return self.goods.name
+
 
 class HotSearchWords(models.Model):
     """

@@ -18,7 +18,9 @@ User = get_user_model()
 
 
 class SmsSerilizer(serializers.Serializer):
-    mobile = serializers.CharField(max_length=11)
+    mobile = serializers.CharField(max_length=11, error_messages={
+        "blank": "手机号不能为空！",
+    })
 
     def validate_mobile(self, mobile):
         """
@@ -30,8 +32,8 @@ class SmsSerilizer(serializers.Serializer):
             raise serializers.ValidationError("用户已经存在！")
 
         # 验证手机号码是否合法
-        # if re.match(REGEX_MOBILE, mobile):
-        #     raise serializers.ValidationError("手机号码不合法！")
+        if re.match(REGEX_MOBILE, mobile):
+            raise serializers.ValidationError("手机号码不合法！")
 
         # 验证发送频率
         one_mintes_ago = datetime.now() - timedelta(hours=0, minutes=1, seconds=0)
