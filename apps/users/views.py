@@ -5,11 +5,15 @@ from django.contrib.auth import get_user_model
 from random import choice
 
 from rest_framework.mixins import CreateModelMixin
+from rest_framework import mixins
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import permissions
+from rest_framework import authentication
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
-from .serializers import SmsSerilizer, UserRegSerializer
+from .serializers import SmsSerilizer, UserRegSerializer, UserDetailSerializer
 from utils.yunpian import YunPian
 from Shop.settings import APIKEY
 from .models import VerifyCode
@@ -80,9 +84,44 @@ class SmsCodeViewSet(CreateModelMixin, viewsets.GenericViewSet):
             }, status=status.HTTP_201_CREATED)
 
 
-class UserViewSet(CreateModelMixin, viewsets.GenericViewSet):
+class UserViewSet(CreateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """
     用户
     """
     serializer_class = UserRegSerializer
     queryset = User.objects.all()
+    # 若此处设置权限会导致注册也需要登录验证
+    # permission_classes = (permissions.IsAuthenticated, )
+    authentication_classes = (authentication.SessionAuthentication, JSONWebTokenAuthentication)
+
+    def get_serializer_class(self):
+        """
+        根据不同请求获取不同序列化类
+        :return:
+        """
+        # 获取详情时使用用户详情类
+        if self.action == "retrieve":
+            return UserDetailSerializer
+        # 当注册时，使用注册类
+        elif self.action == "create":
+            return UserRegSerializer
+        return UserDetailSerializer
+
+    def get_permissions(self):
+        """
+        根据不同请求设置不同权限
+        :return:
+        """
+        # 当获取详情是需要权限
+        if self.action == "retrieve":
+            return [permissions.IsAuthenticated()]
+        # 当注册时，不需要权限
+        elif self.action == "create":
+            return []
+        return []
+
+    def create(self, request, *args, **kwargs):
+        pass
+
+    def get_object(self):
+        return self.request.user
