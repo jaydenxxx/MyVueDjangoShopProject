@@ -25,7 +25,7 @@ from django.views.static import serve
 from Shop.settings import MEDIA_ROOT
 from goods.views import GoodsListViewSet, CatetoryViewSet
 from users.views import SmsCodeViewSet, UserViewSet
-from user_operation.views import UserFavViewSet
+from user_operation.views import UserFavViewSet, LeavingMessageViewSet, AddressViewSet
 
 router = DefaultRouter()
 
@@ -39,6 +39,12 @@ router.register(r'users', UserViewSet, base_name="users")
 
 # 收藏
 router.register(r'userfavs', UserFavViewSet, base_name="userfavs")
+
+# 用户留言
+router.register(r'messages', LeavingMessageViewSet, base_name="messages")
+
+# 收货地址
+router.register(r'address', AddressViewSet, base_name="address")
 
 urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),

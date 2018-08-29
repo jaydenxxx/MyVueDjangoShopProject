@@ -84,7 +84,7 @@ class SmsCodeViewSet(CreateModelMixin, viewsets.GenericViewSet):
             }, status=status.HTTP_201_CREATED)
 
 
-class UserViewSet(CreateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+class UserViewSet(CreateModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
     """
     用户
     """
@@ -105,7 +105,8 @@ class UserViewSet(CreateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericV
         # 当注册时，使用注册类
         elif self.action == "create":
             return UserRegSerializer
-        return UserDetailSerializer
+        else:
+            return UserDetailSerializer
 
     def get_permissions(self):
         """
