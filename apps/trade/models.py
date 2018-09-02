@@ -21,10 +21,11 @@ class ShoppingCart(models.Model):
     class Meta:
         verbose_name = '购物车喵'
         verbose_name_plural = verbose_name
+        # 保证表中只有一条同一个用户相同商品信息的购物车数据
         unique_together = ("user", "goods")
 
     def __str__(self):
-        return "%s(%d)".format(self.goods.name, self.nums)
+        return "%s(%d)".format(self.goods, self.nums)
 
 
 class OrderInfo(models.Model):
